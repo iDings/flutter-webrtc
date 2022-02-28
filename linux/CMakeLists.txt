@@ -11,12 +11,23 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 # not be changed.
 set(PLUGIN_NAME "flutter_webrtc_plugin")
 
+set (CMAKE_EXPORT_COMPILE_COMMANDS ON )
 # Define the plugin library target. Its name must not be changed (see comment
 # on PLUGIN_NAME above).
 #
 # Any new source files that you add to the plugin should be added here.
 add_library(${PLUGIN_NAME} SHARED
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/fl_webrtc_peer_connection.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/fl_webrtc_data_channel.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/fl_webrtc_media_stream.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/fl_webrtc_video_renderer.cc"
   "flutter_webrtc_plugin.cc"
+)
+
+include_directories(
+  "${CMAKE_CURRENT_SOURCE_DIR}/include"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/uuidxx"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libwebrtc/include"
 )
 
 # Apply a standard set of build settings that are configured in the
@@ -37,11 +48,13 @@ target_include_directories(${PLUGIN_NAME} INTERFACE
   "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_link_libraries(${PLUGIN_NAME} PRIVATE flutter)
 target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
+target_link_libraries(${PLUGIN_NAME} PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libwebrtc/lib/linux/x64/libwebrtc.so")
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
 set(flutter_webrtc_bundled_libraries
-  ""
+    "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libwebrtc/lib/linux/x64/libwebrtc.so"
   PARENT_SCOPE
 )
