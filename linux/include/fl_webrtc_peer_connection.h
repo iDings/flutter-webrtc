@@ -2,6 +2,7 @@
 #define __FL_WEBRTC_PEER_CONNECTION_H__
 
 #include <flutter_linux/flutter_linux.h>
+#include "fl_webrtc_context.h"
 
 G_BEGIN_DECLS
 
@@ -51,6 +52,8 @@ struct _FlWebrtcPeerConnectionMethodInterface {
     void (*add_track)(FlWebrtcPeerConnection* self, FlMethodCall* method_call);
     void (*remove_track)(FlWebrtcPeerConnection* self, FlMethodCall* method_call);
 };
+
+FlWebrtcPeerConnection *fl_webrtc_peer_connection_new(FlWebrtcContext *context);
 
 G_END_DECLS
 

@@ -2,6 +2,7 @@
 #define __FL_WEBRTC_MEDIA_STREAM_H__
 
 #include <flutter_linux/flutter_linux.h>
+#include "fl_webrtc_context.h"
 
 G_BEGIN_DECLS
 
@@ -26,6 +27,8 @@ struct _FlWebrtcMediaStreamMethodInterface {
     void (*track_switch_camera)(FlWebrtcMediaStream* self, FlMethodCall* method_call);
     void (*track_dispose)(FlWebrtcMediaStream* self, FlMethodCall* method_call);
 };
+
+FlWebrtcMediaStream *fl_webrtc_media_stream_new(FlWebrtcContext *context);
 
 G_END_DECLS
 

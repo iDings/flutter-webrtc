@@ -17,15 +17,20 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS ON )
 #
 # Any new source files that you add to the plugin should be added here.
 add_library(${PLUGIN_NAME} SHARED
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/fl_webrtc_peer_connection.cc"
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/fl_webrtc_data_channel.cc"
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/fl_webrtc_media_stream.cc"
-  "${CMAKE_CURRENT_SOURCE_DIR}/src/fl_webrtc_video_renderer.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/src/flutter_data_channel.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/src/flutter_media_stream.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/src/flutter_peerconnection.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/src/flutter_video_renderer.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/src/flutter_webrtc.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/src/flutter_webrtc_base.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/src/flutter_video_texture.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/flutter_webrtc_plugin_impl.cc"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/uuidxx/uuidxx.cc"
   "flutter_webrtc_plugin.cc"
 )
 
 include_directories(
-  "${CMAKE_CURRENT_SOURCE_DIR}/include"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../common/linux/include"
   "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/uuidxx"
   "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libwebrtc/include"
 )

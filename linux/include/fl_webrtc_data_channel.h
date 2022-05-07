@@ -2,6 +2,7 @@
 #define __FL_WEBRTC_DATA_CHANNEL_H__
 
 #include <flutter_linux/flutter_linux.h>
+#include "fl_webrtc_context.h"
 
 G_BEGIN_DECLS
 
@@ -21,6 +22,8 @@ struct _FlWebrtcDataChannelMethodInterface {
     void (*send)(FlWebrtcDataChannel* self, FlMethodCall* method_call);
     void (*close)(FlWebrtcDataChannel* self, FlMethodCall* method_call);
 };
+
+FlWebrtcDataChannel *fl_webrtc_data_channel_new(FlWebrtcContext *context);
 
 G_END_DECLS
 
