@@ -34,7 +34,7 @@ class FlutterVideoRenderer: public RTCVideoRenderer<scoped_refptr<RTCVideoFrame>
     size_t width;
     size_t height;
   };
-  
+
   static gboolean CopyPixelCB(FlWebrtcVideoTexture* texture,
                               const uint8_t** out_buffer,
                               uint32_t* width,

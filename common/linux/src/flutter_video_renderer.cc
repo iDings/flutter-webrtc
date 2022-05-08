@@ -1,5 +1,7 @@
 #include "flutter_video_renderer.h"
 #include "flutter_glog.h"
+#include <stdint.h>
+#include <inttypes.h>
 
 namespace flutter_webrtc_plugin {
 
@@ -47,6 +49,7 @@ gboolean FlutterVideoRenderer::CopyPixelCB(FlWebrtcVideoTexture* texture,
                               GError** error,
                               gpointer user_data) {
   FlutterVideoRenderer *thiz = reinterpret_cast<FlutterVideoRenderer *>(user_data);
+  //FL_LOGI("texture_id:%" PRIi64 " %p to flutter", thiz->texture_id_, thiz);
   thiz->mutex_.lock();
   if (thiz->pixel_buffer_.get() && thiz->frame_.get()) {
     if (thiz->pixel_buffer_->width != thiz->frame_->width() ||
@@ -74,8 +77,10 @@ gboolean FlutterVideoRenderer::CopyPixelCB(FlWebrtcVideoTexture* texture,
 }
 
 void FlutterVideoRenderer::OnFrame(scoped_refptr<RTCVideoFrame> frame) {
+  //FL_LOGI("texture_id:%" PRIi64 " %p frome rtc", texture_id_, this);
   if (!first_frame_rendered) {
     if (event_sink_) {
+      //FL_LOGI("texture_id:%" PRIi64 " notify didFirstFrameRendered", texture_id_);
       g_autoptr(FlValue) params = fl_value_new_map();
       fl_value_set_string_take(params, "event", fl_value_new_string("didFirstFrameRendered"));
       fl_value_set_string_take(params, "id", fl_value_new_int(texture_id_));

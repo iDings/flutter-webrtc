@@ -283,7 +283,7 @@ void FlutterPeerConnection::RTCPeerConnectionDispose(
   fl_method_call_respond_success(result, nullptr, nullptr);
 }
 
-// TODO: check at which thread
+// TODO: check thread
 void FlutterPeerConnection::CreateOffer(
     const FlValue *constraintsMap,
     RTCPeerConnection* pc,
