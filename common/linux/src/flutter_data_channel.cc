@@ -8,7 +8,6 @@ namespace flutter_webrtc_plugin {
 
 FlMethodErrorResponse*
 FlutterRTCDataChannelObserver::FlEventChannelListenCB(FlEventChannel* channel, FlValue* args, gpointer user_data) {
-  FL_LOGI("value:%s", fl_value_to_string(args));
   FlutterRTCDataChannelObserver *thiz = reinterpret_cast<FlutterRTCDataChannelObserver *>(user_data);
   thiz->event_sink_ = true;
   return nullptr;
@@ -16,7 +15,6 @@ FlutterRTCDataChannelObserver::FlEventChannelListenCB(FlEventChannel* channel, F
 
 FlMethodErrorResponse*
 FlutterRTCDataChannelObserver::FlEventChannelCancelCB(FlEventChannel* channel, FlValue* args, gpointer user_data) {
-  FL_LOGI("value:%s", fl_value_to_string(args));
   FlutterRTCDataChannelObserver *thiz = reinterpret_cast<FlutterRTCDataChannelObserver *>(user_data);
   thiz->event_sink_ = false;
   return nullptr;

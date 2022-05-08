@@ -40,13 +40,11 @@ fl_webrtc_video_texture_copy_pixels (FlPixelBufferTexture* texture,
 
 static void fl_webrtc_video_texture_dispose(GObject *object) {
   //FlWebrtcVideoTexture *self = FL_WEBRTC_VIDEO_TEXTURE(object);
-  FL_TRACE("ENTER");
   G_OBJECT_CLASS(fl_webrtc_video_texture_parent_class)->dispose(object);
   return;
 }
 
 static void fl_webrtc_video_texture_finalize(GObject *object) {
-  FL_LOGI("Enter");
   G_OBJECT_CLASS(fl_webrtc_video_texture_parent_class)->finalize(object);
   return;
 }
@@ -60,7 +58,6 @@ static void fl_webrtc_video_texture_class_init(FlWebrtcVideoTextureClass *klass)
 }
 
 static void fl_webrtc_video_texture_init(FlWebrtcVideoTexture *self) {
-  FL_LOGI("Enter");
   return;
 }
 

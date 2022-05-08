@@ -3,6 +3,7 @@
 #include <flutter_linux/flutter_linux.h>
 
 #include "flutter_webrtc.h"
+#include "flutter_glog.h"
 
 const char *kChannelName = "FlutterWebRTC.Method";
 
@@ -17,6 +18,7 @@ class FlutterWebRTCPluginImpl : public FlutterWebRTCPlugin {
    }
 
   static void FlutterWebRTCPluginImplDestroyNotify(gpointer data) {
+    FL_LOGI("Plugin Destroying");
     FlutterWebRTCPluginImpl* impl = static_cast<FlutterWebRTCPluginImpl *>(data);
     delete impl;
   }
@@ -33,7 +35,10 @@ class FlutterWebRTCPluginImpl : public FlutterWebRTCPlugin {
                                               impl, FlutterWebRTCPluginImplDestroyNotify);
   }
 
-  virtual ~FlutterWebRTCPluginImpl() { g_object_unref(channel_); }
+  virtual ~FlutterWebRTCPluginImpl() {
+    g_object_unref(channel_);
+    FL_LOGI("~ FlutterWebRTCPluginImpl");
+  }
 
   void HandleMethodCall(FlMethodCall *method_call) {
     // handle method call and forward to webrtc native sdk.
@@ -43,18 +48,27 @@ class FlutterWebRTCPluginImpl : public FlutterWebRTCPlugin {
   FlBinaryMessenger *messenger() { return messenger_; }
   FlTextureRegistrar *textures() { return textures_; }
 
+  static void TextureRegistrarWeakNotifyCB(gpointer user_data, GObject* where_the_object_was) {
+    FL_LOGI("texture registrar releasing");
+    FlutterWebRTCPluginImpl *thiz = reinterpret_cast<FlutterWebRTCPluginImpl *>(user_data);
+    thiz->textures_ = nullptr;
+  }
+
  protected:
   // Creates a plugin that communicates on the given channel.
   FlutterWebRTCPluginImpl(FlPluginRegistrar *registrar, FlMethodChannel *channel)
       : channel_(channel),
         messenger_(fl_plugin_registrar_get_messenger(registrar)),
         textures_(fl_plugin_registrar_get_texture_registrar(registrar)) {
+
+    g_object_weak_ref(G_OBJECT(textures_), TextureRegistrarWeakNotifyCB, this);
     webrtc_ = std::make_unique<FlutterWebRTC>(this);
   }
 
  private:
   FlMethodChannel *channel_;
   std::unique_ptr<FlutterWebRTC> webrtc_;
+  // TODO: review life-cycle
   FlBinaryMessenger *messenger_;
   FlTextureRegistrar *textures_;
 };

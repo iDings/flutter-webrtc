@@ -5,7 +5,6 @@ namespace flutter_webrtc_plugin {
 
 FlMethodErrorResponse*
 FlutterVideoRenderer::FlEventChannelListenCB(FlEventChannel* channel, FlValue* args, gpointer user_data) {
-  FL_LOGI("value:%s", fl_value_to_string(args));
   FlutterVideoRenderer *thiz = reinterpret_cast<FlutterVideoRenderer *>(user_data);
   thiz->event_sink_ = true;
   return nullptr;
@@ -13,7 +12,6 @@ FlutterVideoRenderer::FlEventChannelListenCB(FlEventChannel* channel, FlValue* a
 
 FlMethodErrorResponse*
 FlutterVideoRenderer::FlEventChannelCancelCB(FlEventChannel* channel, FlValue* args, gpointer user_data) {
-  FL_LOGI("value:%s", fl_value_to_string(args));
   FlutterVideoRenderer *thiz = reinterpret_cast<FlutterVideoRenderer *>(user_data);
   thiz->event_sink_ = false;
   return nullptr;
@@ -33,12 +31,11 @@ FlutterVideoRenderer::FlutterVideoRenderer(FlTextureRegistrar *registrar,
   g_autoptr(FlStandardMethodCodec) codec = fl_standard_method_codec_new();
   event_channel_ = fl_event_channel_new(messenger, name.c_str(), FL_METHOD_CODEC(codec));
   fl_event_channel_set_stream_handlers(event_channel_, FlEventChannelListenCB, FlEventChannelCancelCB, this, nullptr);
+
+  FL_LOGI("Texture Channel:%s\n", name.c_str());
 }
 
 FlutterVideoRenderer::~FlutterVideoRenderer() {
-  if (!unregistered) {
-    fl_texture_registrar_unregister_texture(registrar_, FL_TEXTURE(texture_));
-  }
   g_object_unref(texture_);
   g_object_unref(event_channel_);
 }

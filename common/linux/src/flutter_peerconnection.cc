@@ -886,7 +886,6 @@ void FlutterPeerConnection::RemoveTrack(
 
 FlMethodErrorResponse*
 FlutterPeerConnectionObserver::FlEventChannelListenCB(FlEventChannel* channel, FlValue* args, gpointer user_data) {
-  FL_LOGI("value:%s", fl_value_to_string(args));
   FlutterPeerConnectionObserver *thiz = reinterpret_cast<FlutterPeerConnectionObserver *>(user_data);
   thiz->event_sink_ = true;
   return nullptr;
@@ -894,7 +893,6 @@ FlutterPeerConnectionObserver::FlEventChannelListenCB(FlEventChannel* channel, F
 
 FlMethodErrorResponse*
 FlutterPeerConnectionObserver::FlEventChannelCancelCB(FlEventChannel* channel, FlValue* args, gpointer user_data) {
-  FL_LOGI("value:%s", fl_value_to_string(args));
   FlutterPeerConnectionObserver *thiz = reinterpret_cast<FlutterPeerConnectionObserver *>(user_data);
   thiz->event_sink_ = false;
   return nullptr;
