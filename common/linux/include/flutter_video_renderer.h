@@ -30,6 +30,7 @@ class FlutterVideoRenderer: public RTCVideoRenderer<scoped_refptr<RTCVideoFrame>
   };
 
   struct PixelBuffer {
+    PixelBuffer():buffer(nullptr), width(0), height(0){}
     const uint8_t *buffer;
     size_t width;
     size_t height;

@@ -87,8 +87,6 @@ void FlutterVideoRenderer::OnFrame(scoped_refptr<RTCVideoFrame> frame) {
       fl_event_channel_send(event_channel_, params, nullptr, nullptr);
     }
     pixel_buffer_.reset(new PixelBuffer());
-    pixel_buffer_->width = 0;
-    pixel_buffer_->height = 0;
     first_frame_rendered = true;
   }
   if (rotation_ != frame->rotation()) {
